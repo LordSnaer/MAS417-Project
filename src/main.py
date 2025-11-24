@@ -1,8 +1,18 @@
-import api
-import twodtiles
+import overpass_api
+import json
+import coordinates as c
 
-apiKey = api.readKey()
+#kristiansand domkirke
+# coord1 = c.GlobalCoordinate(58.145923, 7.994083)
+# coord2 = c.GlobalCoordinate(58.146344, 7.995170)
 
-sessionToken = api.createSession(apiKey, "roadmap")
+#nidarosdomen
+coord1 = c.GlobalCoordinate(63.426619, 10.395700)
+coord2 = c.GlobalCoordinate(63.427257, 10.398082)
 
-twodtiles.fetchTile(apiKey, sessionToken, 16,34223,19688)
+bbox = c.BoundingBox(type="corners", Coord1=coord1, Coord2=coord2)
+
+response = overpass_api.query(bbox)
+
+with open("output/overpass_result.json", "w") as f:
+    json.dump(response, indent=4, fp=f)
