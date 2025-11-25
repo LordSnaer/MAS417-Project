@@ -15,8 +15,8 @@ class LocalCoordinate:
     def __init__(self, x: float, y: float):
         if max(abs(x), abs(y)) > 10e6:
             raise ValueError("This program assumes that the earth is flat")
-        self.x = x  # in meters
-        self.y = y  # in meters
+        self.x = x
+        self.y = y
         self.diagonal = math.sqrt(x**2 + y**2)
 
 def globalToLocal(coord1:GlobalCoordinate, coord2:GlobalCoordinate) -> LocalCoordinate:
@@ -38,10 +38,17 @@ class BoundingBox:
                 raise ValueError("For 'center' type, provide Coord1, width and height.")
             self.bottomLeft = localToGlobal(Coord1, LocalCoordinate(-width/2, -height/2))
             self.topRight = localToGlobal(Coord1, LocalCoordinate(width/2, height/2))
+            self.center = Coord1
+            self.width = width
+            self.height = height
         elif type == "corners":
             if Coord1 is None or Coord2 is None:
                 raise ValueError("For 'corners' type, provide both Coord1 and Coord2.")
             self.bottomLeft = GlobalCoordinate(min(Coord1.latitude, Coord2.latitude), min(Coord1.longitude, Coord2.longitude))
             self.topRight = GlobalCoordinate(max(Coord1.latitude, Coord2.latitude), max(Coord1.longitude, Coord2.longitude))
+            self.center = GlobalCoordinate((self.bottomLeft.latitude + self.topRight.latitude) / 2, (self.bottomLeft.longitude + self.topRight.longitude) / 2)
+            size = globalToLocal(self.bottomLeft, self.topRight)
+            self.width = size.x
+            self.height = size.y
         else:
             raise ValueError("Type must be either 'center' or 'corners'.")
