@@ -6,7 +6,7 @@ def query(bbox:c.BoundingBox):
     overpass_url = "http://overpass-api.de/api/interpreter"
     bboxStr = f"{bbox.bottomLeft.latitude},{bbox.bottomLeft.longitude},{bbox.topRight.latitude},{bbox.topRight.longitude}"
     query = f"""
-    [out:json][timeout:25];
+    [out:json][timeout:100];
     (
         way["building"]({bboxStr});
         way["building:part"]({bboxStr});

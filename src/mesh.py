@@ -84,7 +84,21 @@ def roofMesh(way:Way) -> trimesh.Trimesh:
         case "hipped":
             return None
         case "pyramidal":
-            return None
+            nodes = [nodeDict[nodeId] for nodeId in way.nodes]
+            bottomVertices = [[node.x, node.y, 0] for node in nodes]
+            apex = [way.polygon.centroid.x, way.polygon.centroid.y, way.roofHeight]
+            baseFaces = trimesh.creation.triangulate_polygon(way.polygon)
+            pyramidFaces = [
+                trimesh.Trimesh(
+                    vertices=[
+                        bottomVertices[i],
+                        bottomVertices[(i + 1) % len(bottomVertices)],
+                        apex
+                    ], faces=[[0,1,2]]
+                ) for i in range(len(bottomVertices))
+            ]
+            return trimesh.util.concatenate([baseFaces] + pyramidFaces)
+
         case "gambrel":
             return None
         case "mansard":
