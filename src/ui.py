@@ -22,7 +22,7 @@ def boundingBoxDialog() -> c.BoundingBox:
         for i, key in enumerate(exampleLocations.keys()):
             print(f"{i+1}: {key}")
         choice = int(input(f"Select a location by number (1-{len(exampleLocations)}):")) - 1
-        if choice < 0 or choice > len(exampleLocations):
+        if choice < 0 or choice >= len(exampleLocations):
             raise ValueError("Invalid choice")
         else:
             coord1, coord2 = exampleLocations[list(exampleLocations.keys())[choice]]
