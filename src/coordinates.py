@@ -17,7 +17,16 @@ class LocalCoordinate:
             raise ValueError("This program assumes that the earth is flat")
         self.x = x
         self.y = y
-        self.diagonal = math.sqrt(x**2 + y**2)
+        self.xy = (x, y)
+
+class distance:
+    def __init__(self, coord1:LocalCoordinate, coord2:LocalCoordinate) -> float:
+        self.dx = coord2.x - coord1.x
+        self.dy = coord2.y - coord1.y
+        self.diagonal = math.sqrt(self.dx**2 + self.dy**2)
+
+def midpoint(coord1:LocalCoordinate, coord2:LocalCoordinate) -> LocalCoordinate:
+    return LocalCoordinate((coord1.x + coord2.x) / 2, (coord1.y + coord2.y) / 2)
 
 def globalToLocal(coord1:GlobalCoordinate, coord2:GlobalCoordinate) -> LocalCoordinate:
     delta_lat = coord2.latitude - coord1.latitude

@@ -15,11 +15,13 @@ import os
 coord1 = c.GlobalCoordinate(63.426619, 10.395700)
 coord2 = c.GlobalCoordinate(63.427257, 10.398082)
 
+#westminster
+# coord1 = c.GlobalCoordinate(51.498034, -0.126185)
+# coord2 = c.GlobalCoordinate(51.500831, -0.123484)
+
 bbox = c.BoundingBox(type="corners", Coord1=coord1, Coord2=coord2)
 
-
 #bbox = ui.boundingBoxDialog()
-
 
 response = overpass_api.query(bbox)
 
@@ -31,6 +33,6 @@ try:
 except Exception as e:
     print(f"Could not save Overpass response to file: {e}")
 
-
-scale = ui.scaleDialog()
+# scale = ui.scaleDialog()
+scale = 1000
 mesh.meshGeneration(bbox, scale, response)
