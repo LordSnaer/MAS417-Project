@@ -13,13 +13,13 @@ class GlobalCoordinate:
 
 class LocalCoordinate:
     def __init__(self, x: float, y: float):
-        if max(abs(x), abs(y)) > 10e6:
+        if max(abs(x), abs(y)) > 10e3:
             raise ValueError("This program assumes that the earth is flat")
         self.x = x
         self.y = y
         self.xy = (x, y)
 
-class distance:
+class Distance:
     def __init__(self, coord1:LocalCoordinate, coord2:LocalCoordinate) -> float:
         self.dx = coord2.x - coord1.x
         self.dy = coord2.y - coord1.y

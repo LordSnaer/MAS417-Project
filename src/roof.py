@@ -9,7 +9,7 @@ def gabledRoof(way:e.Way) -> trimesh.Trimesh:
     polygon = way.polygon.minimum_rotated_rectangle
     nodes = [c.LocalCoordinate(x, y) for x, y in list(polygon.exterior.coords)[:-1]]
     baseVertices = [[node.x, node.y, 0] for node in nodes]
-    refDirection = '-xy' if c.distance(nodes[0], nodes[1]).diagonal > c.distance(nodes[1], nodes[2]).diagonal else 'xy'
+    refDirection = '-xy' if c.Distance(nodes[0], nodes[1]).diagonal > c.Distance(nodes[1], nodes[2]).diagonal else 'xy'
     direction = "xy" if (way.roofOrientation == "across" and refDirection == '-xy') or (way.roofOrientation != "across" and refDirection == 'xy') else "-xy"
     ridgepoint = [
         c.midpoint(nodes[0], nodes[1]),
