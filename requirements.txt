@@ -1,4 +1,3 @@
-numpy
 shapely
 requests
 trimesh[easy]

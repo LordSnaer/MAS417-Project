@@ -1,5 +1,4 @@
 from . import coordinates as c
-import sys
 
 exampleLocations = {
     "Nidarosdomen": (
@@ -21,9 +20,9 @@ def boundingBoxDialog() -> c.BoundingBox:
         print("Available example locations:")
         for i, key in enumerate(exampleLocations.keys()):
             print(f"{i+1}: {key}")
-        choice = int(input(f"Select a location by number (1-{len(exampleLocations)}):")) - 1
+        choice = int(input(f"Select a location by number (1-{len(exampleLocations)}): ")) - 1
         if choice < 0 or choice >= len(exampleLocations):
-            raise ValueError("Invalid choice")
+            raise ValueError("Invalid input")
         else:
             coord1, coord2 = exampleLocations[list(exampleLocations.keys())[choice]]
             return c.BoundingBox(type="corners", Coord1=coord1, Coord2=coord2)
@@ -48,7 +47,7 @@ def boundingBoxDialog() -> c.BoundingBox:
                 coord2 = c.GlobalCoordinate(lat2, lon2)
                 return c.BoundingBox(type="corners", Coord1=coord1, Coord2=coord2)
             case _:
-                raise ValueError("Invalid choice. Please enter '1' or '2'.")
+                raise ValueError("Invalid input. Please enter '1' or '2'.")
             
 def scaleDialog() -> float:
     scale = input("Enter scale factor (default is 1000): ").strip()
@@ -60,8 +59,7 @@ def scaleDialog() -> float:
             raise ValueError("Scale factor must be positive.")
         return scaleValue
     except ValueError:
-        print("Invalid input. Please enter a numeric value for scale factor.")
-        sys.exit(1)
+        raise ValueError("Invalid input.")
 
 def savePathDialog() -> str:
     path = input("Enter output STL file path (default is ./output/buildings.stl): ").strip()

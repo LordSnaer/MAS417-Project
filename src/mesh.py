@@ -1,16 +1,10 @@
-from unittest import case
+from shapely import geometry
+import trimesh
 from . import (
     coordinates as c,
     elements as e,
     roof as r
 )
-import math
-import numpy as np
-import stl
-from shapely import Polygon, geometry
-from shapely.ops import triangulate
-import json
-import trimesh
 
 defaultMinHeight = 0.0
 defaultHeight = 6.0
@@ -76,4 +70,7 @@ def meshGeneration(bbox:c.BoundingBox, scale:float, response:dict) -> None:
     finalMesh:trimesh.Trimesh = trimesh.util.concatenate([baseMesh] + buildingMeshes)
 
     finalMesh.apply_scale(1000 / scale)
-    finalMesh.export('output/mesh.stl')
+    try:
+        finalMesh.export('output/mesh.stl')
+    except Exception as exception:
+        print(f"Failed to export mesh: {exception}")

@@ -16,4 +16,11 @@ def query(bbox:c.BoundingBox):
     """
     response = requests.post(overpass_url, data=query)
     response.raise_for_status()
+
+    try:
+        with open("output/overpass_response.json", "w") as f:
+            json.dump(response.json(), indent=4, fp=f)
+    except Exception as exception:
+        print(f"Could not save Overpass response to file: {exception}")
+
     return response.json()
